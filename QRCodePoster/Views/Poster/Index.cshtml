@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Poster>
+@{
+    ViewData["Title"] = "海报管理";
+}
+<div class="card bg-info">
+    <div class="card-header">筛选</div>
+    <div class="card-body">
+        <form class="form-horizontal" role="form" method="get">
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 col-form-label">海报名称</label>
+                <div class="col-xs-12 col-sm-8 col-lg-9">
+                    <input name="keyword" class="form-control" type="text" value="" />
+                </div>
+                <div class="col-xs-12 col-sm-2 col-lg-2">
+                    <button class="btn btn-secondary"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>
+            <div class="form-group row">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        海报管理 (总数: @Model.Count())
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>海报名称</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@m.Name</td>
+                        <td>
+                            <a title="生成测试" class="btn btn-secondary" asp-action="Draw" asp-route-id="1"><i class="fa fa-edit"></i> 生成测试</a>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="2">
+                        <a class="btn btn-secondary" asp-action="Create"><i class="fa fa-plus"></i> 添加海报</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using QRCodePoster.Helpers;
 using QRCodePoster.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -15,10 +19,12 @@ namespace QRCodePoster.Controllers
     {
         private readonly EFContext db;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public PosterController(EFContext context, IWebHostEnvironment hostEnvironment)
+        private readonly ImageHelper imghelper;
+        public PosterController(EFContext context, IWebHostEnvironment hostEnvironment, ImageHelper imageHelper)
         {
             db = context;
             _hostEnvironment = hostEnvironment;
+            imghelper = imageHelper;
         }
         /// <summary>
         /// 全局提示信息方法
@@ -48,6 +54,12 @@ namespace QRCodePoster.Controllers
             //{
             //	Content = new StringContent(msg)
             //});
+        }
+
+        public IActionResult Index()
+        {
+            var models = db.Poster;
+            return View(models);
         }
 
         public IActionResult Create()
@@ -87,7 +99,7 @@ namespace QRCodePoster.Controllers
                 ThrowHttpResponseException("该文件类型不允许上传");
 
             string fileName = Guid.NewGuid().ToString() + extName;
-            var filePath = _hostEnvironment.WebRootPath + @"\attachment\images\" + fileName;
+            var filePath = _hostEnvironment.WebRootPath + @"/attachment/images/" + fileName;
             //保存文件
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
@@ -106,6 +118,21 @@ namespace QRCodePoster.Controllers
                 is_image = 1,
                 filesize = (int)file.Length
             };
+        }
+
+        public async Task<IActionResult> Draw(int id)
+        {
+            var qr = await db.PosterQRs.FindAsync(id);
+            var m = await db.Poster.FirstOrDefaultAsync();
+
+            if (m == null || qr == null)
+                return NotFound();
+
+            Image bmp = await imghelper.CombinPoster(m, qr);
+            var ms = new MemoryStream();
+            bmp.Save(ms, ImageFormat.Jpeg);
+            bmp.Dispose();
+            return File(ms.ToArray(), "image/jpeg");
         }
     }
 }

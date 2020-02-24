@@ -13,5 +13,6 @@ namespace QRCodePoster.Models
         /// 超级海报
         /// </summary>
         public DbSet<Poster> Poster { get; set; }
+        public DbSet<PosterQR> PosterQRs { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QRCodePoster.Helpers;
 using QRCodePoster.Models;
 
 namespace QRCodePoster
@@ -26,11 +27,13 @@ namespace QRCodePoster
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<EFContext>(options => options.UseInMemoryDatabase("PosterDB"));
+            services.AddHttpClient();
+            services.AddSingleton<ImageHelper>();
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, EFContext context)
         {
             if (env.IsDevelopment())
             {
@@ -55,6 +58,8 @@ namespace QRCodePoster
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            context.EnsureDbInitialized();
         }
     }
 }
