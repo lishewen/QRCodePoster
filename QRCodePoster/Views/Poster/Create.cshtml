@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="~/lib/jquery-contextmenu/jquery.contextMenu.min.css" />
     <link rel="stylesheet" href="~/css/poster.css" />
 }
-<form class="form-horizontal form" enctype="multipart/form-data" method="post" asp-action="Create" asp-antiforgery="true">
+<form class="form" enctype="multipart/form-data" method="post" asp-action="Create" asp-antiforgery="true">
     <input asp-for="Data" type="hidden" />
     <div class="card">
         <div class="card-header">
@@ -67,7 +67,7 @@
                                                     <div class="input-group ">
                                                         <input asp-for="BGUrl" class="form-control" type="text" autocomplete="off">
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-default" onclick="showImageDialog(this);" type="button">选择图片</button>
+                                                            <button class="btn btn-secondary" onclick="showImageDialog(this);" type="button">选择图片</button>
                                                         </span>
                                                     </div>
                                                     <div class="input-group " style="margin-top:.5em;">
@@ -80,15 +80,15 @@
                                             <div class="form-group row">
                                                 <label class="col-xs-12 col-sm-3 col-md-2 col-form-label">海报元素</label>
                                                 <div class="col-sm-9 col-xs-12">
-                                                    <button class="btn btn-default btn-com" type="button" data-type="head">头像</button>
-                                                    <button class="btn btn-default btn-com" type="button" data-type="nickname">昵称</button>
-                                                    <button class="btn btn-default btn-com" type="button" data-type="qr">二维码</button>
-                                                    <button class="btn btn-default btn-com" type="button" data-type="img">图片</button>
+                                                    <button class="btn btn-secondary btn-com" type="button" data-type="head">头像</button>
+                                                    <button class="btn btn-secondary btn-com" type="button" data-type="nickname">昵称</button>
+                                                    <button class="btn btn-secondary btn-com" type="button" data-type="qr">二维码</button>
+                                                    <button class="btn btn-secondary btn-com" type="button" data-type="img">图片</button>
                                                     <span id="goodsparams" style="display:none">
-                                                        <button class="btn btn-default btn-com" type="button" data-type="title">商品名称</button>
-                                                        <button class="btn btn-default btn-com" type="button" data-type="thumb">商品图片</button>
-                                                        <button class="btn btn-default btn-com" type="button" data-type="marketprice">商品现价</button>
-                                                        <button class="btn btn-default btn-com" type="button" data-type="productprice">商品原价</button>
+                                                        <button class="btn btn-secondary btn-com" type="button" data-type="title">商品名称</button>
+                                                        <button class="btn btn-secondary btn-com" type="button" data-type="thumb">商品图片</button>
+                                                        <button class="btn btn-secondary btn-com" type="button" data-type="marketprice">商品现价</button>
+                                                        <button class="btn btn-secondary btn-com" type="button" data-type="productprice">商品原价</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -119,8 +119,8 @@
                                                                     <input name="color" class="form-control" type="text" placeholder="请选择颜色">
                                                                     <span class="input-group-addon" style="width:35px;border-left:none;background-color:"></span>
                                                                     <span class="input-group-btn">
-                                                                        <button class="btn btn-default colorpicker" type="button">选择颜色 <i class="fa fa-caret-down"></i></button>
-                                                                        <button class="btn btn-default colorclean" type="button"><span><i class="fa fa-remove"></i></span></button>
+                                                                        <button class="btn btn-secondary colorpicker" type="button">选择颜色 <i class="fa fa-caret-down"></i></button>
+                                                                        <button class="btn btn-secondary colorclean" type="button"><span><i class="fa fa-remove"></i></span></button>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -145,7 +145,7 @@
                                                     <div class="input-group ">
                                                         <input name="img" class="form-control" type="text" autocomplete="off">
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-default" onclick="showImageDialog(this);" type="button">选择图片</button>
+                                                            <button class="btn btn-secondary" onclick="showImageDialog(this);" type="button">选择图片</button>
                                                         </span>
                                                     </div>
                                                     <div class="input-group " style="margin-top:.5em;">
@@ -170,7 +170,7 @@
                 <label class="col-xs-12 col-sm-3 col-md-2 col-form-label"></label>
                 <div class="col-sm-9 col-xs-12">
                     <input name="submit" class="btn btn-primary col-lg-1" type="submit" value="提交">
-                    <a class="btn btn-default" style="margin-left:10px;" asp-action="Index">返回列表</a>
+                    <a class="btn btn-secondary" style="margin-left:10px;" asp-action="Index">返回列表</a>
                 </div>
             </div>
         </div>

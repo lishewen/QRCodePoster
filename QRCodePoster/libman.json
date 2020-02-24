@@ -33,6 +33,14 @@
     {
       "library": "underscore.js@1.9.1",
       "destination": "wwwroot/lib/underscore.js/"
+    },
+    {
+      "library": "webuploader@0.1.1",
+      "destination": "wwwroot/lib/webuploader/"
+    },
+    {
+      "library": "popper.js@1.16.1",
+      "destination": "wwwroot/lib/popper.js/"
     }
   ]
 }

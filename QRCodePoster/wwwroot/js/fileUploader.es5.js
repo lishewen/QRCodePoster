@@ -108,7 +108,7 @@ define(["jquery", "underscore", "webuploader", "jquery.jplayer", "bootstrap"], f
 				    b = "transition" in a || "WebkitTransition" in a || "MozTransition" in a || "msTransition" in a || "OTransition" in a;return a = null, b;
 			})(), d;var q = {
 				pick: { id: "#filePicker", label: "点击选择图片", multiple: !0 }, dnd: "#dndArea", paste: "#uploader", swf: "./resource/componets/webuploader/Uploader.swf",
-				server: "/admin/poster/upload", chunked: !1, compress: !1, accept: {
+				server: "/poster/upload", chunked: !1, compress: !1, accept: {
 					title: "Images", extensions: "gif,jpg,jpeg,bmp,png", mimeTypes: "image/*"
 				}, fileNumLimit: 30, fileSizeLimit: 4194304, fileSingleSizeLimit: 125829120, auto: !1
 			};q = a.extend({}, q, i.options.uploader), q.pick.multiple = i.options.multiple, d = c.create(q), d.uploadedFiles = [], d.addButton({ id: "#filePicker2", label: "+", multiple: i.options.multiple }), accept = 0, d.resetUploader = function () {
