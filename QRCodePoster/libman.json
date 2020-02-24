@@ -25,6 +25,14 @@
     {
       "library": "require-css@0.1.10",
       "destination": "wwwroot/lib/require-css/"
+    },
+    {
+      "library": "jplayer@2.9.2",
+      "destination": "wwwroot/lib/jplayer/"
+    },
+    {
+      "library": "underscore.js@1.9.1",
+      "destination": "wwwroot/lib/underscore.js/"
     }
   ]
 }
