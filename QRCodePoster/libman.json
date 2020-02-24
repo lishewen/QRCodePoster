@@ -17,6 +17,14 @@
     {
       "library": "font-awesome@5.12.1",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "spectrum@1.8.0",
+      "destination": "wwwroot/lib/spectrum/"
+    },
+    {
+      "library": "require-css@0.1.10",
+      "destination": "wwwroot/lib/require-css/"
     }
   ]
 }

@@ -6,6 +6,201 @@
     <link rel="stylesheet" href="~/lib/jquery-contextmenu/jquery.contextMenu.min.css" />
     <link rel="stylesheet" href="~/css/poster.css" />
 }
+<form class="form-horizontal form" enctype="multipart/form-data" method="post" asp-action="Create" asp-antiforgery="true">
+    <input asp-for="Data" type="hidden" />
+    <div class="card">
+        <div class="card-header">
+            海报设置
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-form-label"><span style="color:red">*</span> 海报名称</label>
+                <div class="col-sm-9 col-xs-12">
+                    <input asp-for="Name" class="form-control" type="text">
+                    <span class="help-block" style="color:red;" asp-validation-for="Name"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-form-label"><span style="color:red">*</span> 海报设计</label>
+                <div class="col-sm-9 col-xs-12">
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td valign="top" style="width:320px;padding:10px;">
+                                    <div id="poster">
+                                    </div>
+                                </td>
+                                <td valign="top" style="padding:10px;">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group row" id="bgset">
+                                                <label class="col-xs-12 col-sm-3 col-md-2 col-form-label">背景图片</label>
+                                                <div class="col-sm-9 col-xs-12">
+                                                    <script type="text/javascript">
+                                                        function showImageDialog(elm, opts, options) {
+                                                            require(["util"], function (util) {
+                                                                var btn = $(elm);
+                                                                var ipt = btn.parent().prev();
+                                                                var val = ipt.val();
+                                                                var img = ipt.parent().next().children();
+                                                                options = { 'global': false, 'class_extra': '', 'direct': true, 'multiple': false };
+                                                                util.image(val, function (url) {
+                                                                    if (url.url) {
+                                                                        if (img.length > 0) {
+                                                                            img.get(0).src = url.url;
+                                                                        }
+                                                                        ipt.val(url.attachment);
+                                                                        ipt.attr("filename", url.filename);
+                                                                        ipt.attr("url", url.url);
+                                                                    }
+                                                                    if (url.media_id) {
+                                                                        if (img.length > 0) {
+                                                                            img.get(0).src = "";
+                                                                        }
+                                                                        ipt.val(url.media_id);
+                                                                    }
+                                                                }, null, options);
+                                                            });
+                                                        }
+                                                    </script>
+                                                    <div class="input-group ">
+                                                        <input asp-for="BGUrl" class="form-control" type="text" autocomplete="off">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" onclick="showImageDialog(this);" type="button">选择图片</button>
+                                                        </span>
+                                                    </div>
+                                                    <div class="input-group " style="margin-top:.5em;">
+                                                        <img width="150" class="img-responsive img-thumbnail" onerror="this.src='/images/nopic.jpg'; this.title='图片未找到.'" src="/images/nopic.jpg">
+                                                        <em title="删除这张图片" class="close" style="position:absolute; top: 0px; right: -14px;" onclick="deleteImage(this)">×</em>
+                                                    </div>
+                                                    <span class="help-block">背景图片尺寸: 640 * 1008</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-xs-12 col-sm-3 col-md-2 col-form-label">海报元素</label>
+                                                <div class="col-sm-9 col-xs-12">
+                                                    <button class="btn btn-default btn-com" type="button" data-type="head">头像</button>
+                                                    <button class="btn btn-default btn-com" type="button" data-type="nickname">昵称</button>
+                                                    <button class="btn btn-default btn-com" type="button" data-type="qr">二维码</button>
+                                                    <button class="btn btn-default btn-com" type="button" data-type="img">图片</button>
+                                                    <span id="goodsparams" style="display:none">
+                                                        <button class="btn btn-default btn-com" type="button" data-type="title">商品名称</button>
+                                                        <button class="btn btn-default btn-com" type="button" data-type="thumb">商品图片</button>
+                                                        <button class="btn btn-default btn-com" type="button" data-type="marketprice">商品现价</button>
+                                                        <button class="btn btn-default btn-com" type="button" data-type="productprice">商品原价</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div id="qrset" style="display:none">
+                                                <div class="form-group row">
+                                                    <label class="col-xs-12 col-sm-3 col-md-2 col-form-label">二维码尺寸</label>
+                                                    <div class="col-sm-9 col-xs-12">
+                                                        <select class="form-control" id="qrsize">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div id="nameset" style="display:none">
+                                                <div class="form-group row">
+                                                    <label class="col-xs-12 col-sm-3 col-md-2 col-form-label">昵称颜色</label>
+                                                    <div class="col-sm-9 col-xs-12">
+                                                        <div class="row row-fix">
+                                                            <div class="col-xs-8 col-sm-8" style="padding-right:0;">
+                                                                <div class="input-group">
+                                                                    <input name="color" class="form-control" type="text" placeholder="请选择颜色">
+                                                                    <span class="input-group-addon" style="width:35px;border-left:none;background-color:"></span>
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-default colorpicker" type="button">选择颜色 <i class="fa fa-caret-down"></i></button>
+                                                                        <button class="btn btn-default colorclean" type="button"><span><i class="fa fa-remove"></i></span></button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-xs-12 col-sm-3 col-md-2 col-form-label">昵称大小</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group">
+                                                            <input class="form-control namesize" id="namesize" type="text" placeholder="例如: 14,16">
+                                                            <div class="input-group-addon">px</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" id="imgset" style="display:none">
+                                                <label class="col-xs-12 col-sm-3 col-md-2 col-form-label">图片设置</label>
+                                                <div class="col-sm-9 col-xs-12">
+
+                                                    <div class="input-group ">
+                                                        <input name="img" class="form-control" type="text" autocomplete="off">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" onclick="showImageDialog(this);" type="button">选择图片</button>
+                                                        </span>
+                                                    </div>
+                                                    <div class="input-group " style="margin-top:.5em;">
+                                                        <img width="150" class="img-responsive img-thumbnail" onerror="this.src='/images/nopic.jpg'; this.title='图片未找到.'" src="/images/nopic.jpg">
+                                                        <em title="删除这张图片" class="close" style="position:absolute; top: 0px; right: -14px;" onclick="deleteImage(this)">×</em>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-group row"></div>
+            <div class="form-group row">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-form-label"></label>
+                <div class="col-sm-9 col-xs-12">
+                    <input name="submit" class="btn btn-primary col-lg-1" type="submit" value="提交">
+                    <a class="btn btn-default" style="margin-left:10px;" asp-action="Index">返回列表</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 @section Scripts{
     <script src="~/lib/require.js/require.min.js"></script>
+    <script src="~/js/config.js"></script>
+    <script src="~/js/designer.js"></script>
+    <script>
+        function deleteImage(elm) {
+            $(elm).prev().attr("src", "/images/nopic.jpg");
+            $(elm).parent().prev().find("input").val("");
+        }
+        require(["util"], function (util) {
+            $(function () {
+                $(".colorpicker").each(function () {
+                    var elm = this;
+                    util.colorpicker(elm, function (color) {
+                        $(elm).parent().prev().prev().val(color.toHexString());
+                        $(elm).parent().prev().css("background-color", color.toHexString());
+                    });
+                });
+                $(".colorclean").click(function () {
+                    $(this).parent().prev().prev().val("");
+                    $(this).parent().prev().css("background-color", "#FFF");
+                });
+            });
+        });
+        require(['contextMenu']);
+    </script>
+    <script src="~/js/poster.js"></script>
 }
