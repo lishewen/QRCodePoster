@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery-contextmenu@2.9.0",
+      "destination": "wwwroot/lib/jquery-contextmenu/"
+    },
+    {
+      "library": "require.js@2.3.6",
+      "destination": "wwwroot/lib/require.js/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "library": "font-awesome@5.12.1",
+      "destination": "wwwroot/lib/font-awesome/"
+    }
+  ]
+}
